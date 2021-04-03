@@ -13,10 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/basket', function () {
-    return view('basket');
-});
+Route::get('/', [\App\Http\Controllers\ProductController::class, 'index']);
+Route::get('/basket', [\App\Http\Controllers\ProductController::class, 'index']);
