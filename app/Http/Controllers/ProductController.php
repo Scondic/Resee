@@ -14,9 +14,9 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $curl = curl_init("https://easydonate.ru/api/v1/shop/4223c208eeec0d60b28e04f579967328/products");
+    public function products() {
+        $key = env("EASYDONATE_KEY");
+        $curl = curl_init("https://easydonate.ru/api/v1/shop/$key/products");
         $headers = array(
             'Accept: application/json',
             'Content-Type: application/json',
@@ -29,14 +29,12 @@ class ProductController extends Controller
 
         $data = json_decode(curl_exec($curl))->response;
 
-        $data_cases = Collection::make($data)
-            ->where("category_id", "=", 1698);
-        $data_privilages = Collection::make($data)
-            ->where("type", "=", "group");
-        $data_items = Collection::make($data)
-            ->where("type", "=", "item");
+        return $data;
+    }
 
-        return view("welcome", compact("data_cases", "data_privilages", "data_items"));
+    public function index()
+    {
+        return view("welcome");
     }
 
     /**
